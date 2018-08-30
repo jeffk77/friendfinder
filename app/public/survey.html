@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Survey Time</title>
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<body>
+	<div class="container">
+		<div class="jumbotron">
+			<p><span>10 Question Survey!</span></p>
+			<a href="/"><button class="btn-primary">Go Home</button></a>
+		</div>
+		<div>
+			<form>
+				<br>Name:<br>
+				<input type="text" name="name" id="name">
+				<br>Image URL:<br>
+				<input type="text" name="image" id="image">
+				<br>How much do you like ice-cream?<br>
+				<input list="values" name="Q1" id="Q1">
+				<br>How much do you like Soccer?<br>
+				<input list="values" name="Q2" id="Q2">
+				<br>How much do you like football?<br>
+				<input list="values" name="Q3" id="Q3">
+				<br>How much do you like Summer?<br>
+				<input list="values" name="Q4" id="Q4">
+				<br>How much do you like Fall?<br>
+				<input list="values" name="Q5" id="Q5">
+				<br>How much do you like Winter?<br>
+				<input list="values" name="Q6" id="Q6">
+				<br>How much do you like Spring?<br>
+				<input list="values" name="Q7" id="Q7">
+				<br>How much do you like Babies?<br>
+				<input list="values" name="Q8" id="Q8">
+				<br>How much do you like Politics?<br>
+				<input list="values" name="Q9" id="Q9">
+				<br>How much do you like hot dogs?<br>
+				<input list="values" name="Q10" id="Q10">
+				<button type="submit" name="submit" id="submitBtn">submit</button>
+
+				<datalist id="values">
+					<option value="1">
+					<option value="2">
+					<option value="3">
+					<option value="4">
+					<option value="5">
+				</datalist>
+			</form>
+		</div>
+		<a href="/api/friends">API list friends</a><span> |</span>
+		<a href="https://github.com/jeffk77/friendfinder">Github Repository</a>
+	</div>
+
+<script
+  src="https://code.jquery.com/jquery-3.2.1.js"
+  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+  crossorigin="anonymous"></script>
+
+	<script type="text/javascript">
+		$("#submitBtn").click(function(event){
+			console.log("submit button clicked.");
+			event.preventDefault();
+			var newFriend = {
+				name: $("#name").val().trim()
+				,image: $("#image").val().trim()
+				,answers:[
+					parseInt($("#Q1").val()),
+					parseInt($("#Q2").val()),
+					parseInt($("#Q3").val()),
+					parseInt($("#Q4").val()),
+					parseInt($("#Q5").val()),
+					parseInt($("#Q6").val()),
+					parseInt($("#Q7").val()),
+					parseInt($("#Q8").val()),
+					parseInt($("#Q9").val()),
+					parseInt($("#Q10").val())
+				]
+			}
+			console.log(newFriend);
+			var currentURL = window.location.origin;
+			$.post(currentURL + "/api/friends", newFriend, 
+				function(data){
+					console.log("post method called, response: ", data);
+					alert("Your best friend is: " + data.name);
+					$("#name").val("");
+					$("#image").val("");
+					$("#Q1").val("");
+					$("#Q2").val("");
+					$("#Q3").val("");
+					$("#Q4").val("");
+					$("#Q5").val("");
+					$("#Q6").val("");
+					$("#Q7").val("");
+					$("#Q8").val("");
+					$("#Q9").val("");
+					$("#Q10").val("");
+				}
+			);
+		});
+	</script>
+</body>
+</html>
